@@ -1,7 +1,6 @@
 <template>
   <div class="c-list-item" 
-    :class="{'c-active': active}" 
-    @click="$emit('selected')">
+    :class="{'c-active': active}">
       <slot></slot>
   </div>
 </template>

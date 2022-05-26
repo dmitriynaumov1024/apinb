@@ -22,6 +22,14 @@
     <div class="tiny-text pad-0-4px">Additional</div>
     <EditableCodeBlock disabled />
   </div>
+  <div class="flex-strip margin-bottom">
+    <button>Run</button>
+    <button>Run until this</button>
+    <div class="spacer"></div>
+    <button>X</button>
+  </div>
+  <div class="margin-bottom">
+  </div>
 </template>
 
 <script>
