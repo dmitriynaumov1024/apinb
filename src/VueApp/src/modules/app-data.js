@@ -1,18 +1,25 @@
 const KEY = "apinb-document"
 const DEFAULT_ENCODED = `{
-  "scenarios": {
-    "0001": {
+  "scenarios": [
+    {
+      "key": 1,
       "caption": "New scenario",
       "description": "Welcome to apinb!",
-      "requests": {
-        "0001": {
+      "requests": [
+        {
+          "key": 1,
           "url": "/api/hello",
           "method": "get"
+        },
+        {
+          "key": 2,
+          "url": "/api/object",
+          "method": "post"
         }
-      }
+      ]
     }
-  },
-  "selectedScenario": "0001"
+  ],
+  "selectedScenario": 1
 }`
 
 export default {
