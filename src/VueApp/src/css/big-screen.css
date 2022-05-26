@@ -1,0 +1,47 @@
+@media screen and (min-width: 730px) {
+  .app-container {
+    width: 720px;
+    height: 100vh;
+  }
+
+  .main, .aside {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  /*.main::after {
+    position: fixed;
+    z-index: 9;
+    pointer-events: 0;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 4rem;
+    content: "";
+    background: linear-gradient(0deg, var(--color-back-0) 0% 32%, transparent 100%);
+  }*/
+
+  .aside {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
+
+  .aside>header {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .aside>main {
+    display: block;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow-y: auto;
+  }
+}
+
+@media screen and (min-width: 970px) {
+  .app-container {
+    width: 960px;
+  }
+}
