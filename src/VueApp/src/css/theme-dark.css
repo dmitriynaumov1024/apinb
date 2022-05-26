@@ -1,8 +1,8 @@
 body[theme="dark"] {
   --color-back-0: rgb(15, 17, 19);
   --color-back-1: rgb(35, 38, 41);
-  --color-back-2: rgb(55, 59, 63);
-  --color-back-3: rgb(75, 81, 85);
+  --color-back-2: rgb(67, 71, 75);
+  --color-back-3: rgb(95, 101, 106);
 
   --color-fore-0: rgb(250, 251, 252);
   --color-fore-1: rgb(245, 246, 247);
@@ -13,6 +13,6 @@ body[theme="dark"] {
   --color-accent-hover: rgb(255, 140, 50);
   --color-accent-active: rgb(235, 82, 16);
 
-  --color-back-hover: rgb(55, 59, 63);
+  --color-back-hover: rgb(35, 38, 41);
   --color-back-active: rgb(90, 118, 157);
 }

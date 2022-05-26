@@ -25,6 +25,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+div {
+  overflow: hidden;
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin: 0px auto 1.5rem;
 }
@@ -79,7 +83,7 @@ code[block] {
   align-items: flex-start;
 }
 
-.flex-toolstrip {
+.flex-strip {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -102,6 +106,10 @@ code[block] {
 .large-text { font-size: 1.200rem; }
 
 .margin-bottom { margin-bottom: 1rem; }
+
+.no-margin { margin: 0px; }
+
+.text-center { text-align: center; }
 
 /* 30-column layout allows to create 2, 3, 5, 6, 10, 15, 30 equal columns*/
 .col-1 { width: 3.3333%; }
@@ -134,3 +142,10 @@ code[block] {
 .col-28 { width: 93.3333%; }
 .col-29 { width: 96.6666%; }
 .col-30 { width: 100.0%; }
+
+/* buttons */
+.button-add {
+  background-color: transparent;
+  color: var(--color-back-3);
+  border: 2px dashed var(--color-back-3);
+}
