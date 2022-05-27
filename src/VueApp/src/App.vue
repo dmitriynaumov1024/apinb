@@ -6,7 +6,7 @@
       </header>
       <main class="pad-8px">
         <ListItem v-for="scenario of apinb.scenarios" 
-          :active="scenario == activeScenario"
+          :active="scenario.key == selected.scenario"
           @click="() => selectScenario(scenario.key)"
           class="small-text">
           <span>{{scenario.caption}}</span>
@@ -18,13 +18,30 @@
       </main>
     </div>
     <div class="col-1"></div>
-    <div class="col-21 pad-8px main" v-if="activeScenario">
-      <h2>{{activeScenario.caption}}</h2>
-      <EditableParagraph v-model="activeScenario.description" />
-      <div v-for="request of activeScenario.requests" :key="request.key">
-        <RequestView :request="request" />
-      </div>
-      <div style="height: 8rem"></div>
+    <div class="col-21 main" v-if="activeScenario">
+      <header class="pad-8px">
+        <EditableHeader v-model="activeScenario.caption" class="h2 no-margin" 
+          @click="() => selectRequest(undefined)" />
+      </header>
+      <main class="pad-8px">
+        <EditableParagraph v-model="activeScenario.description" 
+          @click="() => selectRequest(undefined)" />
+        <div v-for="request of activeScenario.requests" :key="request.key">
+          <RequestView :request="request" 
+            :active="request.key == selected.request"
+            @runThis="" 
+            @runUntilThis=""
+            @removeThis="" 
+            @click="() => selectRequest(request.key)" />
+        </div>
+        <div>
+          <ListItem @click="() => addRequest()" 
+            class="button-add text-center">
+            <span>+ create new</span>
+          </ListItem>
+        </div>
+        <div style="height: 8rem"></div>
+      </main>
     </div>
   </div>
 </template>
@@ -33,6 +50,7 @@
 import AppData from "./modules/app-data.js"
 import ListItem from "./components/ListItem.vue"
 import EditableParagraph from "./components/EditableParagraph.vue"
+import EditableHeader from "./components/EditableHeader.vue"
 import EditableCodeLine from "./components/EditableCodeLine.vue"
 import EditableCodeBlock from "./components/EditableCodeBlock.vue"
 import RequestView from "./components/RequestView.vue"
@@ -41,22 +59,40 @@ export default {
   components: { 
     ListItem,
     EditableParagraph,
+    EditableHeader,
     EditableCodeLine,
     EditableCodeBlock,
     RequestView
   },
   data () {
     return {
-      apinb: AppData.getApinb()
+      apinb: AppData.getApinb(),
+      selected: {
+        scenario: undefined,
+        request: undefined
+      }
     }
   },
   computed: {
     activeScenario () {
       return this.apinb.scenarios
-        .find(item => item.key == this.apinb.selectedScenario)
+        .find(item => item.key == this.selected.scenario)
     }
   },
   methods: {
+    addRequest () {
+      console.log("addRequest")
+      var requests = this.activeScenario.requests
+      var newKey = requests
+        .reduce((prev, item) => (item.key > prev) ? item.key : prev, -1) + 1
+      requests.push({
+        key: newKey,
+        method: "get",
+        url: "",
+        params: ""
+      })
+      this.selectRequest(newKey)
+    },
     addScenario () {
       var newKey = this.apinb.scenarios
         .reduce((prev, item) => (item.key > prev) ? item.key : prev, -1) + 1
@@ -73,10 +109,14 @@ export default {
           }
         ]
       })
-      this.apinb.selectedScenario = newKey
+      this.selectScenario(newKey)
     },
     selectScenario (key) {
-      this.apinb.selectedScenario = key
+      this.selected.request = undefined
+      this.selected.scenario = key
+    },
+    selectRequest (key) {
+      this.selected.request = key
     }
   }
 }

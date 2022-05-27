@@ -1,8 +1,8 @@
 <template>
   <textarea :value="modelValue" ref="input" 
-    @keyup="() => { autoSize(); emitUpdate() }" 
+    @keyup="() => { autoSize() }" 
     @change="() => { autoSize(); emitUpdate() }" 
-    class="code c-input">
+    class="plaincode c-input">
   </textarea>
 </template>
 
@@ -29,24 +29,24 @@ export default {
 </script>
 
 <style scoped>
-.c-input {
-  color: var(--color-fore-0);
+textarea {
   appearance: none;
+  border: none;
   outline: none;
   display: block;
+  background-color: unset;
   width: 100%;
   resize: none;
+  padding: 4px 0px;
+}
+
+.c-input {
+  color: var(--color-fore-0);
   line-height: inherit;
   transition: background-color 0.2s, border-color 0.2s;
-  background-color: var(--color-back-1);
 }
 
-.c-input:hover {
+.c-input:focus {
   background-color: var(--color-back-hover);
-}
-
-.c-input:focus, .c-input:active {
-  background-color: var(--color-back-hover);
-  border-color: var(--color-accent-hover);
 }
 </style>

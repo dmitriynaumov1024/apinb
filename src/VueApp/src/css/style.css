@@ -16,8 +16,8 @@ html {
 
 body {
   min-height: 100vh;
-  color: var(--color-fore-1);
-  background: var(--color-back-0);
+  color: var(--color-fore);
+  background: var(--color-back);
   line-height: 1.6;
   font-family: "Roboto", sans-serif;
   text-rendering: optimizeLegibility;
@@ -26,31 +26,27 @@ body {
 }
 
 div {
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  display: block;
   margin: 0px auto 1.5rem;
-}
-
-p + *:not(p), code[block] {
-  margin-top: 1rem;
-}
-
-h1 {
-  font-size: 20px;
-}
-
-h2 {
-  font-size: 18px;
-}
-
-h3, h4, h5, h6 {
-  font-size: 16px;
-}
-
-h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
+  font-size: 1rem;
+}
+
+h1, .h1 {
+  font-size: 1.25rem;
+}
+
+h2, .h2 {
+  font-size: 1.125rem;
+}
+
+p + *:not(p), * + code[block] {
+  margin-top: 1rem;
 }
 
 pre {
@@ -64,6 +60,11 @@ code, .code {
   background-color: var(--color-back-2);
   border: 1px solid var(--color-back-3);
   padding: 0px 4px;
+}
+
+.plaincode {
+  font-size: 14px;
+  font-family: "Noto Mono", "Consolas", monospace;
 }
 
 code[block] {
@@ -111,6 +112,10 @@ code[block] {
 
 .text-center { text-align: center; }
 
+.icon-1em { height: 1em; }
+
+.icon-2em { height: 2em; }
+
 /* 30-column layout allows to create 2, 3, 5, 6, 10, 15, 30 equal columns*/
 .col-1 { width: 3.3333%; }
 .col-2 { width: 6.6666%; }
@@ -144,8 +149,23 @@ code[block] {
 .col-30 { width: 100.0%; }
 
 /* buttons */
+button, .button, [type="button"] {
+  font: inherit;
+  vertical-align: center;
+}
+
 .button-add {
   background-color: transparent;
-  color: var(--color-back-3);
-  border: 2px dashed var(--color-back-3);
+  color: var(--color-gray);
+  border: 2px dashed var(--color-gray);
+}
+
+.button-add:hover {
+  color: var(--color-gray-hover);
+  border-color: var(--color-gray-hover);
+}
+
+.button-add:active {
+  color: var(--color-gray-active);
+  border-color: var(--color-gray-active);
 }

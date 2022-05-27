@@ -1,8 +1,7 @@
 <template>
   <input type="text" :value="modelValue" ref="input"
-    @keyup="() => { emitUpdate() }" 
     @change="() => { emitUpdate() }"
-    class="code c-input pad-4px"/>
+    class="plaincode c-input"/>
 </template>
 
 <script>
@@ -17,6 +16,13 @@ export default {
 </script>
 
 <style scoped>
+input[type="text"] {
+  outline: none;
+  border: none;
+  background-color: unset;
+  padding: 4px 0px;
+}
+
 .c-input {
   color: var(--color-fore-0);
   appearance: none;
@@ -25,15 +31,9 @@ export default {
   width: 100%;
   line-height: 1;
   transition: background-color 0.2s, border-color 0.2s;
-  background-color: var(--color-back-1);
 }
 
-.c-input:hover {
+.c-input:focus {
   background-color: var(--color-back-hover);
-}
-
-.c-input:focus, .c-input:active {
-  background-color: var(--color-back-hover);
-  border-color: var(--color-accent-hover);
 }
 </style>
