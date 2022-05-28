@@ -50,24 +50,26 @@ function ApinbRequest (options = {}) {
   options.ensureProp("params", isString).or("")
   options.ensureProp("logs", isString).or("")
 
-  this.key = options.key
-  this.url = options.url
-  this.method = options.method
-  this.data = options.data
-  this.params = options.params
-  this.logs = options.logs
+  return {
+    key: options.key,
+    url: options.url,
+    method: options.method,
+    data: options.data,
+    params: options.params,
+    logs: options.logs,
 
-  this.run = () => {
-    console.log("Running...")
-    this.logs = ""
-    AXIOS_RUN[this.method](this)
-    .then(r => {
-      this.logs = JSON.stringify(r.data, null, "  ")
-    })
-    .catch(error => {
-      this.logs += "\n"
-      this.logs += error
-    })
+    run () {
+      console.log("Running...")
+      this.logs = ""
+      AXIOS_RUN[this.method](this)
+      .then(r => {
+        this.logs = JSON.stringify(r.data, null, "  ")
+      })
+      .catch(error => {
+        this.logs += "\n"
+        this.logs += error
+      })
+    }
   }
 }
 
@@ -78,40 +80,42 @@ function ApinbScenario (options = {}) {
   options.ensureProp("description", isString).or("Description of this scenario")
   options.ensureProp("requests", isArray).or([{ key: 1 }])
 
-  this.key = options.key
-  this.caption = options.caption
-  this.description = options.description
-  this.requests = options.requests.map(r => new ApinbRequest(r))
-  this.selection = undefined
+  return {
+    key: options.key,
+    caption: options.caption,
+    description: options.description,
+    requests: options.requests.map(r => ApinbRequest(r)),
+    selection: undefined,
 
-  this.addRequest = () => {
-    var newRequest = new ApinbRequest()
-    newRequest.key = this.requests
-      .reduce((prev, item) => (item.key > prev) ? item.key : prev, -1) + 1
-    this.requests.push(newRequest)
-    this.selectRequest(newRequest)
+    addRequest () {
+      var newRequest = ApinbRequest()
+      newRequest.key = this.requests
+        .reduce((prev, item) => (item.key > prev) ? item.key : prev, -1) + 1
+      this.requests.push(newRequest)
+      this.selectRequest(newRequest)
+    },
+
+    removeRequest (request) {
+      var index = this.requests.findIndex(item => item == request)
+      this.requests.splice(index, 1)
+      this.selectRequest(undefined)
+    },
+
+    selectRequest (request) {
+      this.selection = request.key
+    },
+
+    run (request) {
+      request.run()
+    },
+
+    runUntil (request) {
+      for (var r of this.requests) {
+        r.run()
+        if (r == request) break;
+      }
+    } 
   }
-
-  this.removeRequest = (request) => {
-    var index = this.requests.findIndex(item => item == request)
-    this.requests.splice(index, 1)
-    this.selectRequest(undefined)
-  }
-
-  this.selectRequest = (request) => {
-    this.selection = request.key
-  }
-
-  this.run = (request) => {
-    request.run()
-  }
-
-  this.runUntil = (request) => {
-    for (var r of this.requests) {
-      r.run()
-      if (r == request) break;
-    }
-  } 
 }
 
 function ApinbDocument (options = {}) {
@@ -119,23 +123,25 @@ function ApinbDocument (options = {}) {
   options.ensureProp = ensureProp
   options.ensureProp("scenarios", isArray).or([{ key: 1 }])
   
-  this.scenarios = options.scenarios.map(s => new ApinbScenario(s))
-  this.selection = undefined
+  return {
+    scenarios: options.scenarios.map(s => ApinbScenario(s)),
+    selection: undefined,
 
-  this.save = () => {
-    console.log("Action 'save' was not implemented")
-  }
-  
-  this.addScenario = () => {
-    var newScenario = new ApinbScenario()
-    newScenario.key = this.scenarios
-      .reduce((prev, item) => (item.key > prev) ? item.key : prev, -1) + 1
-    this.scenarios.push(newScenario)
-    this.selectScenario(newScenario)
-  }
+    save () {
+      console.log("Action 'save' was not implemented")
+    },
+    
+    addScenario () {
+      var newScenario = ApinbScenario()
+      newScenario.key = this.scenarios
+        .reduce((prev, item) => (item.key > prev) ? item.key : prev, -1) + 1
+      this.scenarios.push(newScenario)
+      this.selectScenario(newScenario)
+    },
 
-  this.selectScenario = (scenario) => {
-    this.selection = scenario.key
+    selectScenario (scenario) {
+      this.selection = scenario.key
+    }
   }
 }
 
@@ -170,6 +176,6 @@ const DEFAULT_OPTIONS = {
 export default {
   instance () {
     var options = JSON.parse(window.localStorage[KEY] || null) || DEFAULT_OPTIONS
-    return new ApinbDocument(options)
+    return ApinbDocument(options)
   }
 }
