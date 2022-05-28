@@ -6,8 +6,8 @@
       </header>
       <main class="pad-8px">
         <ListItem v-for="scenario of apinb.scenarios" 
-          :active="scenario.key == selected.scenario"
-          @click="() => selectScenario(scenario.key)"
+          :active="scenario.key == apinb.selection"
+          @click="() => selectScenario(scenario)"
           class="small-text">
           <span>{{scenario.caption}}</span>
         </ListItem>
@@ -17,8 +17,7 @@
         </ListItem>
       </main>
     </div>
-    <div class="col-1"></div>
-    <div class="col-21 main" v-if="activeScenario">
+    <div class="col-22 main" v-if="activeScenario">
       <header class="pad-8px">
         <EditableHeader v-model="activeScenario.caption" class="h2 no-margin" 
           @click="() => selectRequest(undefined)" />
@@ -26,14 +25,14 @@
       <main class="pad-8px">
         <EditableParagraph v-model="activeScenario.description" 
           @click="() => selectRequest(undefined)" />
-        <div v-for="request of activeScenario.requests" :key="request.key">
-          <RequestView :request="request" 
-            :active="request.key == selected.request"
-            @runThis="" 
-            @runUntilThis=""
-            @removeThis="" 
-            @click="() => selectRequest(request.key)" />
-        </div>
+        <RequestView v-for="request of activeScenario.requests" 
+          :key="request.key"
+          :request="request" 
+          :active="request.key == activeScenario.selection"
+          @runThis="() => activeScenario.run(request)" 
+          @runUntilThis="() => activeScenario.runUntil(request)"
+          @removeThis="() => removeRequest(request)" 
+          @click="() => selectRequest(request.key)" />
         <div>
           <ListItem @click="() => addRequest()" 
             class="button-add text-center">
@@ -47,7 +46,7 @@
 </template>
 
 <script>
-import AppData from "./modules/app-data.js"
+import Apinb from "./modules/app-data.js"
 import ListItem from "./components/ListItem.vue"
 import EditableParagraph from "./components/EditableParagraph.vue"
 import EditableHeader from "./components/EditableHeader.vue"
@@ -66,58 +65,34 @@ export default {
   },
   data () {
     return {
-      apinb: AppData.getApinb(),
-      selected: {
-        scenario: undefined,
-        request: undefined
-      }
+      apinb: Apinb.instance()
     }
   },
   computed: {
     activeScenario () {
       return this.apinb.scenarios
-        .find(item => item.key == this.selected.scenario)
+        .find(item => item.key == this.apinb.selection)
     }
   },
   methods: {
-    addRequest () {
-      console.log("addRequest")
-      var requests = this.activeScenario.requests
-      var newKey = requests
-        .reduce((prev, item) => (item.key > prev) ? item.key : prev, -1) + 1
-      requests.push({
-        key: newKey,
-        method: "get",
-        url: "",
-        params: ""
-      })
-      this.selectRequest(newKey)
-    },
     addScenario () {
-      var newKey = this.apinb.scenarios
-        .reduce((prev, item) => (item.key > prev) ? item.key : prev, -1) + 1
-      this.apinb.scenarios.push({
-        key: newKey,
-        caption: `Scenario #${newKey}`,
-        description: "Add your description here...",
-        requests: [
-          {
-            key: 1,
-            method: "get",
-            url: "",
-            params: ""
-          }
-        ]
-      })
-      this.selectScenario(newKey)
+      this.apinb.addScenario()
     },
-    selectScenario (key) {
-      this.selected.request = undefined
-      this.selected.scenario = key
+    selectScenario (scenario) {
+      this.apinb.selectScenario(scenario)
     },
-    selectRequest (key) {
-      this.selected.request = key
+    addRequest () {
+      this.activeScenario.addRequest()
+    },
+    selectRequest (request) {
+      this.activeScenario.selectRequest(request)
+    },
+    removeRequest (request) {
+      this.activeScenario.removeRequest(request)
     }
+  },
+  mounted () {
+    
   }
 }
 </script>

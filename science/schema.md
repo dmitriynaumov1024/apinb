@@ -11,7 +11,41 @@ document: {
       data?: Object,
       params?: Object
     }]
-  }],
-  selectedScenario: Number
+  }]
 }
+```
+
+```
+Apinb
++ instance(): ApinbDocument
+
+
+ApinbDocument
++ scenarios: [ApinbScenario]
++ selection: Number
++ save() 
++ addScenario(): Number
++ selectScenario(ApinbScenario)
+
+
+ApinbScenario
++ key: Number
++ caption: String
++ description: String
++ requests: [ApinbRequest]
++ selection: Number
++ addRequest()
++ removeRequest(ApinbRequest)
++ selectRequest(ApinbRequest)
++ run (ApinbRequest)
++ runUntil (ApinbRequest)
+
+
+ApinbRequest
++ key: Number
++ url: String
++ method: String
++ data?: String
++ params?: String
++ logs?: String
 ```
