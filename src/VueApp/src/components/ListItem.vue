@@ -15,7 +15,7 @@ export default {
 .c-list-item {
   border-radius: 4px;
   padding: 3px 8px;
-  margin: 0 0 4px;
+  margin: 0 0 6px;
   background-color: transparent;
   cursor: pointer;
   user-select: none;

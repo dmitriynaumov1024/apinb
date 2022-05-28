@@ -17,7 +17,7 @@ body[theme="light"] {
   --color-accent-hover: rgb(255, 140, 50);
   --color-accent-active: rgb(235, 82, 16);
 
-  --color-gray: rgb(130, 132, 135);
-  --color-gray-hover: rgb(141, 143, 146);
-  --color-gray-active: rgb(130, 132, 135);
+  --color-gray: rgb(148, 149, 150);
+  --color-gray-hover: rgb(158, 159, 160);
+  --color-gray-active: rgb(146, 147, 148);
 }

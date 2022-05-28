@@ -1,6 +1,7 @@
 <template>
   <div class="c-request-view margin-bottom"
-    :class="{'c-request-view__active': active}">
+    :class="{'c-request-view__active': active}"
+    @keyup.ctrl.delete="() => { $emit('removeThis') }">
     <div class="flex-row margin-bottom">
       <div class="col-6">
         <div class="tiny-text">Method</div>
@@ -96,17 +97,18 @@ export default {
 <style scoped>
 .c-request-view {
   background-color: var(--color-back-0);
-  border: 2px solid var(--color-back-2);
+  border: 2px solid var(--color-back-1);
+  border-radius: 4px;
   padding: 4px 0.75rem 4px 2rem;
   transition: background-color 0.2s, border-color 0.2s;
-  margin-left: 1rem;
   overflow: visible;
-  --color-accent-sec: var(--color-back-3);
+  --color-accent-sec: var(--color-back-2);
 }
 
 .c-request-view__active {
-  border-color: var(--color-accent);
-  --color-accent-sec: var(--color-accent);
+  border-color: var(--color-gray);
+  box-shadow: 0 2px 8px rgba(120, 120, 120, 0.1);
+  --color-accent-sec: var(--color-gray);
 }
 
 .c-request-view-toolbar {
@@ -127,6 +129,8 @@ export default {
   padding: 0;
   line-height: 1;
   background: unset;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 </style>
