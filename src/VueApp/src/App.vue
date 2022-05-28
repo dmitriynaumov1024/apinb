@@ -7,11 +7,11 @@
       <main class="pad-8px">
         <ListItem v-for="scenario of apinb.scenarios" 
           :active="scenario.key == apinb.selection"
-          @click="() => selectScenario(scenario)"
+          @click="() => apinb.selectScenario(scenario)"
           class="small-text">
           <span>{{scenario.caption}}</span>
         </ListItem>
-        <ListItem @click="() => addScenario()" 
+        <ListItem @click="() => apinb.addScenario()" 
           class="button-add small-text text-center">
           <span>+ create new</span>
         </ListItem>
@@ -20,21 +20,22 @@
     <div class="col-22 main" v-if="activeScenario">
       <header class="pad-8px">
         <EditableHeader v-model="activeScenario.caption" class="h2 no-margin" 
-          @click="() => selectRequest(undefined)" />
+          @click="() => activeScenario.selectRequest(undefined)" />
       </header>
       <main class="pad-8px">
         <EditableParagraph v-model="activeScenario.description" 
-          @click="() => selectRequest(undefined)" />
+          @click="() => activeScenario.selectRequest(undefined)" />
         <RequestView v-for="request of activeScenario.requests" 
           :key="request.key"
           :request="request" 
           :active="request.key == activeScenario.selection"
           @runThis="() => activeScenario.run(request)" 
           @runUntilThis="() => activeScenario.runUntil(request)"
-          @removeThis="() => removeRequest(request)" 
-          @click="() => selectRequest(request.key)" />
+          @clearLogs="() => request.clearLogs()"
+          @removeThis="() => activeScenario.removeRequest(request)" 
+          @click="() => activeScenario.selectRequest(request)" />
         <div>
-          <ListItem @click="() => addRequest()" 
+          <ListItem @click="() => activeScenario.addRequest()" 
             class="button-add text-center">
             <span>+ create new</span>
           </ListItem>
@@ -75,21 +76,7 @@ export default {
     }
   },
   methods: {
-    addScenario () {
-      this.apinb.addScenario()
-    },
-    selectScenario (scenario) {
-      this.apinb.selectScenario(scenario)
-    },
-    addRequest () {
-      this.activeScenario.addRequest()
-    },
-    selectRequest (request) {
-      this.activeScenario.selectRequest(request)
-    },
-    removeRequest (request) {
-      this.activeScenario.removeRequest(request)
-    }
+    
   },
   mounted () {
     

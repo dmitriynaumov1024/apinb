@@ -1,6 +1,5 @@
 import axios from "axios"
 
-const deepCopy = el => JSON.parse(JSON.stringify(el))
 const isString = o => typeof(o) == "string"
 const isNumber = o => typeof(o) == "number"
 const isObject = o => typeof(o) == "object"
@@ -18,26 +17,36 @@ function ensureProp (propName, predicate) {
   }
 }
 
+JSON.tryParse = function (str, fallback) {
+  try {
+    return JSON.parse(str)
+  }
+  catch (error) {
+    console.warn(error)
+    return fallback
+  }
+}
+
 var AXIOS_RUN = {
   "get": (options) => axios({
     method: "get",
     url: options.url,
-    params: JSON.parse(options.params)
+    params: JSON.tryParse(options.params, {})
   }),
   "delete": (options) => axios({
     method: "delete",
     url: options.url,
-    params: JSON.parse(options.params)
+    params: JSON.tryParse(options.params, {})
   }),
   "post": (options) => axios({
     method: "post",
     url: options.url,
-    data: JSON.parse(options.data)
+    data: JSON.tryParse(options.data, {})
   }),
   "put": (options) => axios({
     method: "put",
     url: options.url,
-    data: JSON.parse(options.data)
+    data: JSON.tryParse(options.data, {})
   }),
 }
 
@@ -66,9 +75,13 @@ function ApinbRequest (options = {}) {
         this.logs = JSON.stringify(r.data, null, "  ")
       })
       .catch(error => {
-        this.logs += "\n"
+        if (this.logs.length > 0) this.logs += "\n"
         this.logs += error
       })
+    },
+
+    clearLogs () {
+      this.logs = ""
     }
   }
 }
@@ -102,7 +115,8 @@ function ApinbScenario (options = {}) {
     },
 
     selectRequest (request) {
-      this.selection = request.key
+      if (!request) this.selection = undefined
+      else this.selection = request.key
     },
 
     run (request) {
@@ -140,7 +154,8 @@ function ApinbDocument (options = {}) {
     },
 
     selectScenario (scenario) {
-      this.selection = scenario.key
+      if (!scenario) this.selection = undefined
+      else this.selection = scenario.key
     }
   }
 }
@@ -173,9 +188,35 @@ const DEFAULT_OPTIONS = {
   ]
 }
 
+var apinbInstance = undefined
+
 export default {
   instance () {
-    var options = JSON.parse(window.localStorage[KEY] || null) || DEFAULT_OPTIONS
-    return ApinbDocument(options)
+    if (!apinbInstance) {
+      var options = JSON.tryParse(window.localStorage[KEY], DEFAULT_OPTIONS)
+      apinbInstance = ApinbDocument(options)
+      apinbInstance.save = function () {
+        console.log("Saving...")
+        console.log(this)
+        window.localStorage[KEY] = JSON.stringify({
+          scenarios: this.scenarios.map(s => ({
+            key: s.key,
+            caption: s.caption,
+            description: s.description,
+            requests: s.requests.map(r => ({
+              key: r.key,
+              url: r.url,
+              method: r.method,
+              data: r.data,
+              params: r.params,
+              logs: r.logs
+            }))
+          })),
+          selection: this.selection
+        })
+        console.log("Saved.")
+      }
+    }
+    return apinbInstance
   }
 }

@@ -26,7 +26,7 @@
       <EditableCodeBlock disabled />
     </div>
     <div class="c-request-view-toolbar">
-      <button title="Run">
+      <button title="Run" @click="() => $emit('runThis')">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
           viewBox="0 0 50 50" class="icon-2em">
           <circle cx="25" cy="25" r="23" 
@@ -35,7 +35,7 @@
           <path fill="var(--color-back)" d="M 19 16 L 19 34 L 36 25 L 19 16 Z"/>
         </svg>
       </button>
-      <button title="Run until this">
+      <button title="Run until this" @click="() => $emit('runUntilThis')">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
           viewBox="0 0 50 50" class="icon-2em">
           <circle cx="25" cy="25" r="25"
@@ -50,7 +50,7 @@
             stroke="var(--color-accent-sec)" fill="none" stroke-width="4"/>
         </svg>
       </button>
-      <button title="Clear logs">
+      <button title="Clear logs" @click="() => $emit('clearLogs')">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
           viewBox="0 0 50 50" class="icon-2em">
           <circle cx="25" cy="25" r="25"
@@ -63,7 +63,8 @@
       </button>
     </div>
     <div v-if="request.logs" class="margin-bottom">
-      <code block><pre>{{request.logs}}</pre></code>
+      <div class="tiny-text">Result</div>
+      <pre class="plaincode tiny-text">{{request.logs}}</pre>
     </div>
   </div>
 </template>

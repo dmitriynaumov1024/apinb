@@ -1,6 +1,6 @@
 <template>
   <textarea :value="modelValue" ref="input" 
-    @keyup="() => { autoSize() }" 
+    @input="() => { autoSize() }" 
     @change="() => { autoSize(); emitUpdate() }" 
     class="plaincode c-input">
   </textarea>
@@ -13,7 +13,7 @@ export default {
     autoSize() {
       var el = this.$refs["input"]
       el.style.height = "1px" 
-      el.style.height = el.scrollHeight + 32 + "px"
+      el.style.height = el.scrollHeight + 26 + "px"
     },
     emitUpdate() {
       this.$emit("update:modelValue", this.$refs["input"].value)
