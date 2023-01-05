@@ -13,7 +13,7 @@
         </ListItem>
         <ListItem @click="() => apinb.addScenario()" 
           class="button-add small-text text-center">
-          <span>+ create new</span>
+          <span>+ create scenario</span>
         </ListItem>
       </main>
     </div>
@@ -34,13 +34,11 @@
           @clearLogs="() => request.clearLogs()"
           @removeThis="() => activeScenario.removeRequest(request)" 
           @click="() => activeScenario.selectRequest(request)" />
-        <div>
-          <ListItem @click="() => activeScenario.addRequest()" 
-            class="button-add text-center">
-            <span>+ create new</span>
-          </ListItem>
-        </div>
-        <div style="height: 8rem"></div>
+        <ListItem @click="() => activeScenario.addRequest()" 
+          class="button-add text-center">
+          <span>+ create request</span>
+        </ListItem>
+        <div style="height: 4rem"></div>
       </main>
     </div>
   </div>
@@ -71,8 +69,8 @@ export default {
   },
   computed: {
     activeScenario () {
-      return this.apinb.scenarios
-        .find(item => item.key == this.apinb.selection)
+      return this.apinb.scenarios.find(item => item.key == this.apinb.selection) 
+          || this.apinb.scenarios[0]
     }
   },
   methods: {

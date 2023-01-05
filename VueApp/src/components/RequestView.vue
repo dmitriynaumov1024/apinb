@@ -80,8 +80,8 @@ export default {
   background-color: var(--color-back-0);
   border: 2px solid var(--color-back-1);
   border-radius: 4px;
+  max-width: 1000px;
   padding: 4px 0.75rem 4px 2rem;
-  transition: background-color 0.2s, border-color 0.2s;
   overflow: visible;
   --color-accent-sec: var(--color-back-2);
 }
