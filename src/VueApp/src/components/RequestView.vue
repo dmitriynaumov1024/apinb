@@ -27,39 +27,13 @@
     </div>
     <div class="c-request-view-toolbar">
       <button title="Run" @click="() => $emit('runThis')">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
-          viewBox="0 0 50 50" class="icon-2em">
-          <circle cx="25" cy="25" r="23" 
-            fill="var(--color-accent)" 
-            stroke="var(--color-back)" stroke-width="4" />
-          <path fill="var(--color-back)" d="M 19 16 L 19 34 L 36 25 L 19 16 Z"/>
-        </svg>
+        <IconRun class="icon-2em" />
       </button>
       <button title="Run until this" @click="() => $emit('runUntilThis')">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
-          viewBox="0 0 50 50" class="icon-2em">
-          <circle cx="25" cy="25" r="25"
-            fill="var(--color-back)" />
-          <circle cx="25" cy="25" r="20"
-            stroke="var(--color-accent-sec)" fill="none" stroke-width="3" />
-          <path d="M 15 19 L 15 31 L 24 25 L 15 19 Z"
-            stroke="var(--color-accent-sec)" fill="none" stroke-width="3"/>
-          <path d="M 25 19 L 25 31 L 34 25 L 25 19 Z"
-            stroke="var(--color-accent-sec)" fill="none" stroke-width="3"/>
-          <path d="M 36 17 L 36 33 Z"
-            stroke="var(--color-accent-sec)" fill="none" stroke-width="4"/>
-        </svg>
+        <IconRunUntilThis class="icon-2em" />
       </button>
       <button title="Clear logs" @click="() => $emit('clearLogs')">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
-          viewBox="0 0 50 50" class="icon-2em">
-          <circle cx="25" cy="25" r="25"
-            fill="var(--color-back)" />
-          <circle cx="25" cy="25" r="20"
-            stroke="var(--color-accent-sec)" fill="none" stroke-width="3" />
-          <path d="M 18 18 L 32 32 M 18 32 L 32 18 Z"
-            stroke="var(--color-accent-sec)" fill="none" stroke-width="3"/>
-        </svg>
+        <IconClearLogs class="icon-2em" />
       </button>
     </div>
     <div v-if="request.logs" class="margin-bottom">
@@ -72,9 +46,15 @@
 <script>
 import EditableCodeLine from "./EditableCodeLine.vue"
 import EditableCodeBlock from "./EditableCodeBlock.vue"
+import IconRun from "./icons/Run.vue"
+import IconRunUntilThis from "./icons/RunUntilThis.vue"
+import IconClearLogs from "./icons/ClearLogs.vue"
 
 export default {
   components: { 
+    IconRun,
+    IconRunUntilThis,
+    IconClearLogs,
     EditableCodeLine,
     EditableCodeBlock
   },

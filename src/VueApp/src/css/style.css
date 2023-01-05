@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-
 *,
 *::before,
 *::after {
@@ -19,7 +17,7 @@ body {
   color: var(--color-fore);
   background: var(--color-back);
   line-height: 1.6;
-  font-family: "Roboto", sans-serif;
+  font-family: "Arimo", "Arial", "Helvetica", system-ui, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

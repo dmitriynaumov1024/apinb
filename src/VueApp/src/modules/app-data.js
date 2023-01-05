@@ -3,8 +3,7 @@ import axios from "axios"
 const isString = o => typeof(o) == "string"
 const isNumber = o => typeof(o) == "number"
 const isObject = o => typeof(o) == "object"
-const isArray = o => typeof(o) == "object" &&
-                     typeof(o.forEach) == "function"
+const isArray = o => typeof(o) == "object" && o.constructor == Array
 
 function ensureProp (propName, predicate) {
   var _this = this

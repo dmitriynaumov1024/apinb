@@ -47,6 +47,7 @@ textarea {
 }
 
 .c-input:focus {
-  background-color: var(--color-back-hover);
+  background-color: var(--color-back-active);
+  box-shadow: inset 0 -2px var(--color-accent-active);
 }
 </style>
