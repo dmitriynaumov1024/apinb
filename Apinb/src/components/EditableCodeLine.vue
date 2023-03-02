@@ -23,7 +23,7 @@ input[type="text"] {
   padding: 4px 0px;
 }
 
-.c-input {
+.c-input.c-input {
   color: var(--color-fore-0);
   appearance: none;
   outline: none;
@@ -31,6 +31,7 @@ input[type="text"] {
   width: 100%;
   line-height: 1;
   transition: background-color 0.2s, border-color 0.2s;
+  padding-left: 1px;
 }
 
 .c-input:focus {

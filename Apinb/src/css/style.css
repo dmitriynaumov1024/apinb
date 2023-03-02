@@ -98,13 +98,16 @@ code[block] {
 
 .pad-8px { padding: 8px; }
 
-.tiny-text { font-size: 0.750rem; }
+.tiny-text, .text-tiny { font-size: 0.750rem; }
 
-.small-text { font-size: 0.875rem; }
+.small-text, .text-small { font-size: 0.875rem; }
 
-.large-text { font-size: 1.200rem; }
+.large-text, .text-large { font-size: 1.250rem; }
 
-.margin-bottom { margin-bottom: 1rem; }
+.text-gray { color: var(--color-gray); }
+
+.margin-bottom, .margin-bottom-1 { margin-bottom: 1rem; }
+.margin-bottom-05 { margin-bottom: 0.5rem; }
 
 .no-margin { margin: 0px; }
 
@@ -166,4 +169,13 @@ button, .button, [type="button"] {
 .button-add:active {
   color: var(--color-gray-active);
   border-color: var(--color-gray-active);
+}
+
+.only-on-hover {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.only-on-hover:hover {
+  opacity: 1;
 }

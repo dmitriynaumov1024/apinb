@@ -1,5 +1,6 @@
 <template>
   <textarea :value="modelValue" ref="input" 
+    spellcheck="false" 
     @input="() => { autoSize() }" 
     @change="() => { autoSize(); emitUpdate() }">
   </textarea>

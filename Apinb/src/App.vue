@@ -8,11 +8,11 @@
         <ListItem v-for="scenario of apinb.scenarios" 
           :active="scenario.key == apinb.selection"
           @click="() => apinb.selectScenario(scenario)"
-          class="small-text">
+          class="text-small margin-bottom-05">
           <span>{{scenario.caption}}</span>
         </ListItem>
         <ListItem @click="() => apinb.addScenario()" 
-          class="button-add small-text text-center">
+          class="button-add text-small text-center">
           <span>+ create scenario</span>
         </ListItem>
       </main>
@@ -23,21 +23,27 @@
           @click="() => activeScenario.selectRequest(undefined)" />
       </header>
       <main class="pad-8px">
-        <EditableParagraph v-model="activeScenario.description" 
-          @click="() => activeScenario.selectRequest(undefined)" />
-        <RequestView v-for="request of activeScenario.requests" 
-          :key="request.key"
-          :request="request" 
-          :active="request.key == activeScenario.selection"
-          @runThis="() => activeScenario.run(request)" 
-          @runUntilThis="() => activeScenario.runUntil(request)"
-          @clearLogs="() => request.clearLogs()"
-          @removeThis="() => activeScenario.removeRequest(request)" 
-          @click="() => activeScenario.selectRequest(request)" />
-        <ListItem @click="() => activeScenario.addRequest()" 
-          class="button-add text-center">
-          <span>+ create request</span>
-        </ListItem>
+        <div class="margin-bottom-1"
+          @click="() => activeScenario.selectRequest(undefined)">
+          <div class="tiny-text">Description</div>
+          <EditableParagraph v-model="activeScenario.description" />
+          <div class="tiny-text">Base URL</div>
+          <EditableCodeLine v-model="activeScenario.baseurl" />
+        </div>
+        <template v-for="(request, index) in activeScenario.requests" :key="request.key">
+          <RequestView :request="request" 
+            :active="request.key == activeScenario.selection"
+            @runThis="() => activeScenario.run(request)" 
+            @runUntilThis="() => activeScenario.runUntil(request)"
+            @clearLogs="() => request.clearLogs()"
+            @removeThis="() => activeScenario.removeRequest(request)" 
+            @click="() => activeScenario.selectRequest(request)" 
+            class="margin-bottom-05" />
+          <ListItem @click="() => activeScenario.insertRequestAfter(index)" 
+            class="only-on-hover text-small text-gray text-center margin-bottom-05">
+            <span>+ create request</span>
+          </ListItem>
+        </template>
         <div style="height: 4rem"></div>
       </main>
     </div>

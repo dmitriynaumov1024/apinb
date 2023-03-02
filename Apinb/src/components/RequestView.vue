@@ -1,5 +1,5 @@
 <template>
-  <div class="c-request-view margin-bottom"
+  <div class="c-request-view"
     :class="{'c-request-view__active': active}"
     @keyup.ctrl.delete="() => { $emit('removeThis') }">
     <div class="flex-row margin-bottom">
@@ -37,7 +37,7 @@
       </button>
     </div>
     <div v-if="request.logs" class="margin-bottom">
-      <div class="tiny-text">Result</div>
+      <div class="tiny-text">Response <span v-if="request.status">status: {{request.status}}</span></div>
       <pre class="plaincode tiny-text">{{request.logs}}</pre>
     </div>
   </div>
