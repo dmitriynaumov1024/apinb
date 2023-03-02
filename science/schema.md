@@ -4,6 +4,7 @@ document: {
     key: Number,
     caption: String,
     description: String,
+    baseurl: String,
     requests: [{
       key: Number,
       url: String,
@@ -13,6 +14,7 @@ document: {
     }]
   }]
 }
+
 ```
 
 ```
@@ -35,6 +37,7 @@ ApinbScenario
 + requests: [ApinbRequest]
 + selection: Number
 + addRequest()
++ insertRequestAfter(Number)
 + removeRequest(ApinbRequest)
 + selectRequest(ApinbRequest)
 + run (ApinbRequest)
@@ -48,4 +51,5 @@ ApinbRequest
 + data?: String
 + params?: String
 + logs?: String
+
 ```
