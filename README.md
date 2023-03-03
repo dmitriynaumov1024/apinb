@@ -27,15 +27,17 @@ This repository includes:
 ```
 cd Apinb
 npm run dev
+# open http://localhost:3000 in browser
 ```
 3. To run example server application:
 ```
 cd Apinb
-npm run build && \
-rm -rf ../ServerApp/wwwroot/* && \
-    cp -r ./dist/* ../ServerApp/wwwroot/
-    cd ../ServerApp
+npm run build
+rm -rf ../ServerApp/wwwroot/*
+cp -r ./dist/* ../ServerApp/wwwroot/
+cd ../ServerApp
 dotnet run
+# open http://localhost:5000 in browser
 ``` 
 
 ## Copyright
