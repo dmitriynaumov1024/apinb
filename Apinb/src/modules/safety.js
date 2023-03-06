@@ -11,7 +11,7 @@ function isObject (o) {
 }
 
 function isArray (o) {
-    return o.constructor == Array
+    return o?.constructor == Array
 }
 
 function isFunction (f) {
