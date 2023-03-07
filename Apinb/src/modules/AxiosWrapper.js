@@ -38,7 +38,7 @@ function AxiosWrapper() {
             return runAxiosRequest("put", options, extraOptions)
         },
         "delete" (options, extraOptions = null) {
-            return runAxiosRequest("put", options, extraOptions)
+            return runAxiosRequest("delete", options, extraOptions)
         }
     }
 }
