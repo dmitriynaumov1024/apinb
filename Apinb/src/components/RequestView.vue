@@ -26,13 +26,13 @@
       <EditableCodeBlock disabled />
     </div>
     <div class="c-request-view-toolbar">
-      <button title="Run" @click="() => $emit('runThis')">
+      <button class="none" title="Run" @click="() => $emit('runThis')">
         <IconRun class="icon-2em" />
       </button>
-      <button title="Run until this" @click="() => $emit('runUntilThis')">
+      <button class="none" title="Run until this" @click="() => $emit('runUntilThis')">
         <IconRunUntilThis class="icon-2em" />
       </button>
-      <button title="Clear logs" @click="() => $emit('clearLogs')">
+      <button class="none" title="Clear logs" @click="() => $emit('clearLogs')">
         <IconClearLogs class="icon-2em" />
       </button>
     </div>
@@ -105,13 +105,6 @@ export default {
 .c-request-view-toolbar button {
   display: block;
   margin: 0.25rem auto 0;
-  appearance: none;
-  border: unset;
-  padding: 0;
-  line-height: 1;
-  background: unset;
-  cursor: pointer;
-  transition: 0.2s;
 }
 
 </style>

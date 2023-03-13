@@ -1,6 +1,5 @@
 <template>
-  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 50 50" class="icon-2em">
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
     <circle cx="25" cy="25" r="25"
       fill="var(--color-back)" />
     <circle cx="25" cy="25" r="20"
