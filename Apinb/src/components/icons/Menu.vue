@@ -1,8 +1,8 @@
 <template>
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
-    <path v-if="active" d="M 11 11 L 39 39 M 11 39 L 39 11"  
+    <path v-if="active" d="M 13 14 L 37 38 M 13 38 L 37 14"  
       stroke="var(--color-gray)" stroke-width="3.5" />
-    <path v-else d="M 10 12 L 40 12 M 10 25 L 40 25 M 10 38 L 40 38" 
+    <path v-else d="M 13 15 L 37 15 M 13 26 L 37 26 M 13 37 L 37 37" 
       stroke="var(--color-gray)" stroke-width="3" />
   </svg>
 </template>
