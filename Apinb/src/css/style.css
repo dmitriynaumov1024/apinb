@@ -112,6 +112,7 @@ code[block] {
 
 .margin-bottom, .margin-bottom-1 { margin-bottom: 1rem; }
 .margin-bottom-05 { margin-bottom: 0.5rem; }
+.margin-bottom-025 { margin-bottom: 0.25rem; }
 
 .no-margin { margin: 0px; }
 
@@ -193,7 +194,13 @@ button.none {
   opacity: 1;
 }
 
+.hidden {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
 .expandable-menu {
-  padding-bottom: 4px;
+  margin-bottom: 4px;
   border-bottom: 1px solid var(--color-back-3)
 }

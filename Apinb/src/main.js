@@ -16,15 +16,14 @@ app.mount("#app")
 
 window.axios = axios
 window.vueApp = app
-window.apinbDocument = Apinb.instance()
 
 window.addEventListener("beforeunload", (e) => {
-  window.apinbDocument.save()
+  Apinb.saveDocument()
 })
 
 window.addEventListener("keydown", (e) => {
   if (e.ctrlKey && e.key == "s") {
     e.preventDefault()
-    window.apinbDocument.save()
+    Apinb.saveDocument()
   }
 })

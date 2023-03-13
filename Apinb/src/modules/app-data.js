@@ -1,10 +1,13 @@
 import { isString, isNumber, isArray, isObject, ensureProp } from "./safety.js"
-import { jsonStringify, jsonTryParse, jsonPretty } from "./json.js"
+import { jsonStringify, jsonParse, jsonTryParse, jsonPretty } from "./json.js"
+import { v4 as UUIDv4 } from "uuid"
+import { saveAs } from "file-saver"
 
 import ApinbDocument from "./ApinbDocument.js"
 
 const KEY = "apinb-document"
 const DEFAULT_OPTIONS = {
+    "id": UUIDv4(),
     "scenarios": [
         {
             "key": 1,
@@ -33,39 +36,72 @@ const DEFAULT_OPTIONS = {
     ]
 }
 
-let apinbInstance = undefined
-
-function saveApinbDocumentToLocalStorage() {
-    console.log("Saving...")
-    console.log(this)
-    window.localStorage[KEY] = jsonStringify({
-        scenarios: this.scenarios.map(s => ({
-            key: s.key,
-            caption: s.caption,
-            description: s.description,
-            baseurl: s.baseurl,
-            requests: s.requests.map(r => ({
-                key: r.key,
-                url: r.url,
-                method: r.method,
-                data: r.data,
-                params: r.params,
-                status: r.status,
-                logs: r.logs
-            }))
-        })),
-        selection: this.selection
-    })
-    console.log("Saved.")
-}
+let instance = undefined
 
 export default {
-    instance () {
-        if (!apinbInstance) {
+    instance() {
+        if (! instance) {
             let options = jsonTryParse(window.localStorage[KEY]) ?? DEFAULT_OPTIONS
-            apinbInstance = ApinbDocument(options)
-            apinbInstance.save = saveApinbDocumentToLocalStorage
+            instance = ApinbDocument(options)
         }
-        return apinbInstance
+        return instance
+    },
+    saveDocument () {
+        if (! instance) {
+            return
+        }
+        console.log("Saving...")
+        let resultText = jsonStringify(instance.plainCopy())
+        window.localStorage[KEY + "-" + instance.id] = resultText
+        window.localStorage[KEY] = resultText
+        console.log("Saved.")
+    },
+    newDocument () {
+        if (instance) {
+            this.saveDocument()
+        }
+        return new Promise((resolve, reject) => {
+            instance = ApinbDocument({})
+            resolve(instance)
+        })
+    },
+    loadDocument () {
+        console.error("load: not implemented yet")
+    },
+    importDocument (file) {
+        if (instance) {
+            this.saveDocument()
+        }
+        return new Promise((resolve, reject) => {
+            let reader = new FileReader()
+            reader.addEventListener("load", () => {
+                try {
+                    instance = ApinbDocument(jsonParse(reader.result))
+                    resolve(instance)
+                }
+                catch (error) {
+                    reject(error)
+                }
+            })
+            reader.addEventListener("error", () => {
+                reject(reader.error)
+            })
+            reader.readAsText(file)
+        })
+    },
+    exportDocument () {
+        console.log("Exporting...")
+        if (!instance) {
+            console.error("Export failed: no active instance")
+            return
+        }
+        let resultText = jsonPretty(instance.plainCopy())
+        let resultFile = new File([resultText], "document.apinb", {
+            type: "application/json;charset=utf-8;"
+        })
+        window.lastExportedFile = resultFile
+        saveAs(resultFile)
+        console.log("Done.")
     }
+
 }

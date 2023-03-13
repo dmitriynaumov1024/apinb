@@ -1,8 +1,40 @@
 <template>
   <div class="app-container flex-row">
-    <div class="col-8 aside" style="border-right: 1px solid var(--color-back-2)">
-      <header class="pad-8px">
-        <h2 class="no-margin">Scenarios</h2>
+    <div class="col-8 aside">
+      <header>
+        <div class="flex-stripe">
+          <button class="none" @click="menuButtonClick">
+            <IconMenu class="icon-2em" :active="menu.expanded" /> 
+          </button>
+          <h2 class="no-margin pad-8px">
+            Scenarios
+          </h2>
+        </div>
+        <div class="expandable-menu" v-if="menu.expanded">
+          <div class="pad-8px">
+            <ListItem @click="newMenuItemClick" 
+              title="Save this to local storage and Create new document"
+              class="text-small margin-bottom-025">
+              - New document
+            </ListItem>
+            <ListItem @click="loadMenuItemClick" 
+              title="Load document from local storage"
+              class="text-small margin-bottom-025">
+              - Load
+            </ListItem>
+            <ListItem 
+              title="Import apinb file"
+              class="text-small margin-bottom-025">
+              <label for="import-file-input">- Import</label>
+              <input type="file" id="import-file-input" class="hidden" accept="*/*" @change="importFileSelected" />
+            </ListItem>
+            <ListItem @click="exportMenuItemClick" 
+              title="Export this as apinb file"
+              class="text-small margin-bottom-025">
+              - Export
+            </ListItem>
+          </div>
+        </div>
       </header>
       <main class="pad-8px">
         <ListItem v-for="scenario of apinb.scenarios" 
@@ -58,6 +90,7 @@ import EditableHeader from "./components/EditableHeader.vue"
 import EditableCodeLine from "./components/EditableCodeLine.vue"
 import EditableCodeBlock from "./components/EditableCodeBlock.vue"
 import RequestView from "./components/RequestView.vue"
+import IconMenu from "./components/icons/Menu.vue"
 
 export default {
   components: { 
@@ -66,11 +99,15 @@ export default {
     EditableHeader,
     EditableCodeLine,
     EditableCodeBlock,
-    RequestView
+    RequestView,
+    IconMenu
   },
   data () {
     return {
-      apinb: Apinb.instance()
+      apinb: Apinb.instance(),
+      menu: {
+        expanded: false
+      }
     }
   },
   computed: {
@@ -80,7 +117,33 @@ export default {
     }
   },
   methods: {
-    
+    menuButtonClick () {
+      this.menu.expanded = !(this.menu.expanded)
+    },
+    newMenuItemClick () {
+      Apinb.newDocument()
+      .then(result => {
+        this.apinb = result
+        this.menu.expanded = false
+      })
+    },
+    loadMenuItemClick () {
+      Apinb.loadDocument()
+    },
+    importFileSelected () {
+      let importedFile = document.querySelector("#import-file-input").files[0]
+      Apinb.importDocument(importedFile)
+      .then(result => {
+        this.apinb = result
+        this.menu.expanded = false
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    },
+    exportMenuItemClick () {
+      Apinb.exportDocument()
+    }
   },
   mounted () {
     
