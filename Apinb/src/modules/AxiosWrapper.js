@@ -14,9 +14,12 @@ function AxiosWrapper() {
             method: method,
             url: options?.url ?? extraOptions?.url,
             baseURL: options?.baseurl ?? extraOptions?.baseurl,
-            headers: { "Authorization": auth },
-            params: options.params ?? "",
-            data: options.data ?? {},
+            headers: { 
+                "Authorization": auth, 
+                "Content-Type": options.contentType ?? extraOptions.contentType ?? "application/json"
+            },
+            params: options.params,
+            data: options.data,
             validateStatus: alwaysTrue
         })
         promise.then(response => {
